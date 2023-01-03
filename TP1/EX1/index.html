@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Geolocation Data</title>
+</head>
+<body>
+  <h1>Geolocation Data</h1>
+  <div id="data">Loading data...</div>
+
+  <script>
+    function success(position) {
+      var lon = position.coords.longitude;
+      var lat = position.coords.latitude;
+      var alt = position.coords.altitude;
+      var acc = position.coords.accuracy;
+      var spd = position.coords.speed;
+      var tstamp = position.timestamp;
+      var date = new Date(tstamp);
+      var data = 'Longitude: ' + lon + '<br>' +
+                 'Latitude: ' + lat + '<br>' +
+                 'Altitude: ' + alt + '<br>' +
+                 'Accuracy: ' + acc + '<br>' +
+                 'Speed: ' + spd + '<br>' +
+                 'Timestamp: ' + date;
+      document.getElementById('data').innerHTML = data;
+    }
+
+    function error() {
+      document.getElementById('data').innerHTML = 'Unable to retrieve your location';
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+      } else {
+        document.getElementById('data').innerHTML = 'Geolocation is not supported by your browser';
+      }
+    }
+
+    function watchLocation() {
+      if (navigator.geolocation) {
+        var watchId = navigator.geolocation.watchPosition(success, error);
+      } else {
+        document.getElementById('data').innerHTML = 'Geolocation is not supported by your browser';
+      }
+    }
+
+    getLocation();
+    watchLocation();
+  </script>
+</body>
+</html>
