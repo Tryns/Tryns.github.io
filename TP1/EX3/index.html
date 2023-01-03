@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Touch Events</title>
+  <style>
+    #canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <div id="event-output"></div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const eventOutput = document.getElementById('event-output');
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    function draw(event) {
+      if (!isDrawing) return;
+
+      const ctx = canvas.getContext('2d');
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(event.offsetX, event.offsetY);
+      ctx.stroke();
+      [lastX, lastY] = [event.offsetX, event.offsetY];
+    }
+
+    canvas.addEventListener('touchstart', (event) => {
+      isDrawing = true;
+      [lastX, lastY] = [event.touches[0].clientX, event.touches[0].clientY];
+      eventOutput.textContent = `Touch event: ${event.type}, X: ${lastX}, Y: ${lastY}`;
+    });
+
+    canvas.addEventListener('touchmove', (event) => {
+      event.preventDefault();
+      draw(event);
+      eventOutput.textContent = `Touch event: ${event.type}, X: ${event.touches[0].clientX}, Y: ${event.touches[0].clientY}`;
+    });
+
+    canvas.addEventListener('touchend', (event) => {
+      isDrawing = false;
+      eventOutput.textContent = `Touch event: ${event.type}, X: ${event.changedTouches[0].clientX}, Y: ${event.changedTouches[0].clientY}`;
+    });
+  </script>
+</body>
+</html>
