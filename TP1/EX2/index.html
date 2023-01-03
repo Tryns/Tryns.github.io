@@ -1,0 +1,23 @@
+<script>
+  if (window.DeviceOrientationEvent) {
+    window.addEventListener("deviceorientation", function(event) {
+      var alpha = event.alpha;
+      var beta = event.beta;
+      var gamma = event.gamma;
+      document.getElementById("orientation").innerHTML = "Alpha: " + alpha + "<br>Beta: " + beta + "<br>Gamma: " + gamma;
+    });
+  }
+
+  if (window.DeviceMotionEvent) {
+    window.addEventListener("devicemotion", function(event) {
+      var acceleration = event.acceleration;
+      var rotation = event.rotationRate;
+      document.getElementById("motion").innerHTML = "Acceleration: <br>X: " + acceleration.x + "<br>Y: " + acceleration.y + "<br>Z: " + acceleration.z + "<br>Rotation: <br>Alpha: " + rotation.alpha + "<br>Beta: " + rotation.beta + "<br>Gamma: " + rotation.gamma;
+    });
+  }
+</script>
+
+<h1>Orientation</h1>
+<div id="orientation"></div>
+<h1>Motion</h1>
+<div id="motion"></div>
