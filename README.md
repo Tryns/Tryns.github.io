@@ -1,4 +1,4 @@
 # Tryns.github.io
-URL dispo :
+pas de menu faut tapé le lien complet.
 
-/Quizz 
+ex : https://tryns.github.io/TP1/EX1/
