@@ -34,6 +34,10 @@
                 [32.321, -64.757]
             ];
 
+            var marker = L.marker([lat, lng]).addTo(map);
+            var nice_latlng = [43.7009,7.2668];
+            var nice_marker = L.marker(nice_latlng).addTo(map);
+
             var triangle = L.polygon(triangleCoords, {color: "red"}).addTo(map);
 
             var circle = L.circle([lat, lng], accuracy, {
@@ -46,7 +50,7 @@
             var marseille_latlng = [43.2965,5.3698];
             
             //Mettre un segment entre Marseille et Nice
-            var distance_line = L.polyline([marseille_latlng, [lat, lng]], {color: 'red'}).addTo(map);
+            var distance_line = L.polyline([marseille_latlng, nice_latlng], {color: 'red'}).addTo(map);
 
             //Calculer la distance entre Marseille et Nice (formule math)
             var R = 6371e3; // metres
