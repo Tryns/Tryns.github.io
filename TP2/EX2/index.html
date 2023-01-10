@@ -33,7 +33,7 @@
                 [18.466, -66.118],
                 [32.321, -64.757]
             ];
-
+            //Position de NICE
             var marker = L.marker([lat, lng]).addTo(map);
             var nice_latlng = [43.7009,7.2668];
             var nice_marker = L.marker(nice_latlng).addTo(map);
@@ -68,7 +68,7 @@
             
             //Afficher la distance dans un popup ou dans une page html
             var distance_popup = L.popup()
-                .setLatLng([lat, lng])
+                .setLatLng(nice_latlng)
                 .setContent("La distance entre Marseille et Nice est de : " + distance.toFixed(2)/1000 + " Kilo-mètres.")
                 .openOn(map);
 
