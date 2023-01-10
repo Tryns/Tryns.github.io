@@ -41,6 +41,33 @@
                 fillColor: "#00f",
                 fillOpacity: 0.5
             }).addTo(map);
+            
+            //Position de Marseille
+            var marseille_latlng = [43.2965,5.3698];
+            
+            //Mettre un segment entre Marseille et Nice
+            var distance_line = L.polyline([marseille_latlng, [lat, lng]], {color: 'red'}).addTo(map);
+
+            //Calculer la distance entre Marseille et Nice (formule math)
+            var R = 6371e3; // metres
+            var φ1 = lat * (Math.PI/180);
+            var φ2 = marseille_latlng[0] * (Math.PI/180);
+            var Δφ = (marseille_latlng[0]-lat) * (Math.PI/180);
+            var Δλ = (marseille_latlng[1]-lng) * (Math.PI/180);
+
+            var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+            var distance = R * c;
+            
+            //Afficher la distance dans un popup ou dans une page html
+            var distance_popup = L.popup()
+                .setLatLng([lat, lng])
+                .setContent("La distance entre Marseille et Nice est de : " + distance.toFixed(2) + " mètres.")
+                .openOn(map);
+
         });
     </script>
 </body>
