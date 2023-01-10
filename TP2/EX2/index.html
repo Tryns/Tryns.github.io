@@ -65,7 +65,7 @@
             //Afficher la distance dans un popup ou dans une page html
             var distance_popup = L.popup()
                 .setLatLng([lat, lng])
-                .setContent("La distance entre Marseille et Nice est de : " + distance.toFixed(2) + " mètres.")
+                .setContent("La distance entre Marseille et Nice est de : " + distance.toFixed(2)/1000 + " Kilo-mètres.")
                 .openOn(map);
 
         });
