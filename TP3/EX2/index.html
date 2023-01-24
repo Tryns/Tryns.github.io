@@ -24,11 +24,11 @@
 			scene.add( cube );
 
             const light1 = new THREE.DirectionalLight( 0x00ff00, 1 );
-            light1.position.set( 1, 1, 1 ).normalize();
+            light1.position.set( -5, 0, 0 ).normalize();
             scene.add( light1 );
 
             const light2 = new THREE.DirectionalLight( 0xff0000, 1 );
-            light2.position.set( 0, 1, 1 ).normalize();
+            light2.position.set( 0, 0, 5 ).normalize();
             scene.add( light2 );
 
 			camera.position.z = 5;
