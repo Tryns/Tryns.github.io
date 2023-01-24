@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Canvas Example</title>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+  <script>
+    // récupération du canvas
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    // affichage de l'image
+    var image = new Image();
+    image.src = "image.jpg";
+    image.onload = function() {
+      ctx.drawImage(image, 0, 0);
+    };
+
+    // dessin de la maison
+    ctx.fillStyle = "brown";
+    ctx.fillRect(50, 50, 100, 100);
+    ctx.fillRect(65, 75, 30, 50);
+
+    // dessin du soleil
+    ctx.beginPath();
+    ctx.arc(200, 75, 50, 0, 2 * Math.PI);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.stroke();
+  </script>
+</body>
+</html>
