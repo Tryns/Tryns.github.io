@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SVG Example</title>
+</head>
+<body>
+  <svg width="500" height="500">
+    <!-- dessin du ciel -->
+    <rect x="0" y="0" width="500" height="250" fill="blue"/>
+
+    <!-- dessin de la montagne -->
+    <path d="M250,250 L225,200 L275,200 Z" fill="brown"/>
+
+    <!-- dessin de la maison -->
+    <rect x="50" y="50" width="100" height="100" fill="brown"/>
+    <rect x="65" y="75" width="30" height="50" fill="white"/>
+    <rect id="door" x="80" y="100" width="20" height="25" fill="brown"
+    onmouseover="changeDoorColor(this)" onmouseout="resetDoorColor(this)"/>
+
+    <!-- dessin du soleil -->
+    <circle id="sun" cx="200" cy="75" r="50" fill="yellow"
+    onclick="changeSkyColor()"/>
+  </svg>
+  <script>
+    function changeDoorColor(door) {
+      door.setAttribute("fill", "red");
+    }
+
+    function resetDoorColor(door) {
+      door.setAttribute("fill", "brown");
+    }
+
+    function changeSkyColor() {
+      var sun = document.getElementById("sun");
+      var sky = document.getElementsByTagName("rect")[0];
+      if (sky.getAttribute("fill") == "blue") {
+        sky.setAttribute("fill", "gray");
+        sun.setAttribute("fill", "black");
+      } else {
+        sky.setAttribute("fill", "blue");
+        sun.setAttribute("fill", "yellow");
+      }
+    }
+  </script>
+</body>
+</html>
