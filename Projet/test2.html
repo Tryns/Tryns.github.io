@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.119.0/build/three.js"></script>
+    <style>
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Map with Marker and Select Box</h2>
+    <select id="destination">
+        <option value="51.5074,0.1278">London</option>
+        <option value="48.8566,2.3522">Paris</option>
+        <option value="52.5200,13.4050">Berlin</option>
+        <option value="41.9028,12.4964">Rome</option>
+        <option value="59.9139,10.7522">Oslo</option>
+        <option value="60.1699,24.9384">Helsinki</option>
+        <option value="59.3293,18.0686">Stockholm</option>
+        <option value="55.6761,12.5683">Copenhagen</option>
+        <option value="50.0880,14.4208">Prague</option>
+        <option value="52.2297,21.0122">Warsaw</option>
+    </select>
+    <button id="get-route">Get Route</button>
+    <div id="map"></div>
+    <canvas id="compass"></canvas>
+    <script>
+      var map = L.map("map").setView([51.5074, 0.1278], 13);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      var marker = L.marker([51.5074, 0.1278]).addTo(map);
+      document.getElementById("destination").addEventListener("change", function() {
+        var dest = this.value.split(",");
+        marker.setLatLng([dest[0], dest[1]]).update();
+        map.panTo([dest[0], dest[1]]);
+      });
+
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        var currentPos = L.marker([lat, lng]).addTo(map);
+        map.panTo([lat, lng]);
+      });
+
+      document.getElementById("get-route").addEventListener("click", function() {
+        var start = marker.getLatLng();
+        var dest = document.getElementById("destination").value.split(",");
+        var end = [dest[0], dest[1]];
+    });
+
+    var scene, camera, renderer, arrow;
+    var destination = document.getElementById("destination").value.split(",");
+    var destinationLat = parseFloat(destination[0]);
+    var destinationLng = parseFloat(destination[1]);
+
+    // Initialize the 3D scene
+    init();
+    animate();
+
+    function init() {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("compass") });
+      renderer.setSize(200, 200);
+
+      // Create the compass arrow
+      var geometry = new THREE.CylinderGeometry(0, 0.5, 2, 32);
+      var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+      arrow = new THREE.Mesh(geometry, material);
+      arrow.position.z = 1;
+      arrow.rotation.x = Math.PI / 2;
+      scene.add(arrow);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+
+    // Update the compass arrow direction
+    function updateCompass() {
+      var lat = marker.getLatLng().lat;
+      var lng = marker.getLatLng().lng;
+      var angle = Math.atan2(destinationLat - lat, destinationLng - lng);
+      arrow.rotation.z = -angle;
+    }
+
+    // Call the updateCompass function when the destination changes
+    document.getElementById("destination").addEventListener("change", updateCompass);
+
+
+    </script>
+  </body>
+</html>
